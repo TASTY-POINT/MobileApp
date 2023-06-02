@@ -32,7 +32,7 @@ class _loginState extends State<login> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(
@@ -108,7 +108,7 @@ class _loginState extends State<login> {
 
 
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20,right: 20, bottom: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.start,
