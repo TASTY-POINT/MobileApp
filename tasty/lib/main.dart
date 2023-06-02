@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/vista1.dart';
+import 'package:tasty/payment.dart';
+import 'package:tasty/sucessful.dart';
+
 
 void main() {
   runApp(const MyApp());
