@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/signin.dart';
 import 'package:tasty/sucessful.dart';
+import 'package:tasty/vista1.dart';
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
@@ -36,7 +37,7 @@ class _loginState extends State<login> {
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFFFDFBEF),
                 ),
                 child: Row(
                   children: [
@@ -198,7 +199,7 @@ class _loginState extends State<login> {
                         ),
                       ),
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => SuccessfulPage()),);
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),);
                       },
 
                     ),

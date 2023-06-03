@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/sucessful.dart';
+import 'package:tasty/vista1.dart';
 
 import 'login.dart';
 
@@ -38,7 +39,7 @@ class _signinState extends State<signin> {
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xFFFDFBEF),
                 ),
                 child: Row(
                   children: [
@@ -215,7 +216,7 @@ class _signinState extends State<signin> {
                         ),
                       ),
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => SuccessfulPage()),);
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),);
                       },
 
                     ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasty/vista1.dart';
 import 'package:tasty/payment.dart';
 import 'package:tasty/sucessful.dart';
+import 'package:tasty/login.dart';
 
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.cyan,
       ),
-      home: HomePage(),
+      home: login(),
     );
   }
 }
