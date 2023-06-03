@@ -79,7 +79,7 @@ class PromotionDetailsPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 105,
+                    height: 45,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(

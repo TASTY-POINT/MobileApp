@@ -88,7 +88,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 240,
+                        height: 140,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(

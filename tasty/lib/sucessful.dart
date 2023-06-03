@@ -41,7 +41,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
             image: AssetImage('assets/img/successful.png'), // <-- SEE HERE
           ),
             SizedBox(
-              height: 105,
+              height: 65,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
