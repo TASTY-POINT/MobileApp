@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tasty/payment.dart';
+import 'package:tasty/model/Product.dart';
+import 'package:tasty/cartPage.dart';
+import 'package:tasty/vista1.dart';
 import 'package:rounded_background_text/rounded_background_text.dart';
+import 'package:tasty/database/db.dart';
 class PromotionDetailsPage extends StatelessWidget {
+  final int id;
   final String title;
   final String image;
   final String subtitle;
   final String description;
+  final int cantidad;
 
 
   const PromotionDetailsPage({
@@ -14,6 +19,8 @@ class PromotionDetailsPage extends StatelessWidget {
     required this.image,
     required this.subtitle,
     required this.description,
+    required this.id,
+    required this.cantidad,
   }) : super(key: key);
 
   @override
@@ -55,7 +62,7 @@ class PromotionDetailsPage extends StatelessWidget {
                       image,
                       width: double.infinity,
                       height: 200,
-                      fit: BoxFit.contain,  
+                      fit: BoxFit.contain,
                     ),
                   ),
                   Container(
@@ -79,7 +86,54 @@ class PromotionDetailsPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      backgroundColor: Color(0xff3f1602),
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Añadir al Carrito',
+                        style: TextStyle(
+                          color: Color(0xFFFDFBEF),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      await DB().insertarProducto(Product(
+                        id: id,
+                        title: title,
+                        subtitle: subtitle,
+                        description: description,
+                        image: image,
+                        cantidad: cantidad,
+                      ));
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Producto añadido',
+                            style: TextStyle(
+                              color: Color(0xff3f1602), // Cambia el color de texto a 0xff3f1602
+                            ),
+                          ),
+                          duration: Duration(milliseconds: 500),
+                          backgroundColor: Color(0xfffdfbef),
+                        ),
+                      );
+                    },
+                  ),
+
+
+                  SizedBox(
+                    height: 15,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -92,7 +146,7 @@ class PromotionDetailsPage extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.all(8.0),
                       child: Text(
-                        'Continue',
+                        'Ir a pagar',
                         style: TextStyle(
                           color: Color(0xFFFDFBEF),
                           fontWeight: FontWeight.bold,
@@ -100,8 +154,35 @@ class PromotionDetailsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => CreditCardPage()),);
+                    onPressed: () async{
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => CartPage()),);
+                    },),
+
+
+                  SizedBox(
+                    height: 15,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        backgroundColor: Color(0xff3f1602)
+
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Seguir Comprando',
+                        style: TextStyle(
+                          color: Color(0xFFFDFBEF),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async{
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),);
                     },)
 
                   // ... Otros detalles de la promoción

@@ -41,6 +41,7 @@ class _PopularPromotionsWidgetState extends State<PopularPromotionsWidget> {
                     itemBuilder: (context, index) {
                       final promotion = promotions![index];
                       return PopularPromotionTiles(
+                        id: promotion.id,
                         title: promotion.title,
                         image: promotion.image,
                         subtitle: promotion.subtitle,
@@ -59,6 +60,7 @@ class _PopularPromotionsWidgetState extends State<PopularPromotionsWidget> {
 }
 
 class PopularPromotionTiles extends StatelessWidget {
+  final int id;
   final String title;
   final String image;
   final String subtitle;
@@ -66,6 +68,7 @@ class PopularPromotionTiles extends StatelessWidget {
 
   const PopularPromotionTiles({
     Key? key,
+    required this.id,
     required this.title,
     required this.image,
     required this.subtitle,
@@ -88,10 +91,12 @@ class PopularPromotionTiles extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => PromotionDetailsPage(
+                id: id,
                 title: title,
                 image: image,
                 subtitle: subtitle,
                 description: description,
+                cantidad: 0,
               ),
             ),
           );
