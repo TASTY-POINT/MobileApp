@@ -46,6 +46,8 @@ class _PopularPromotionsWidgetState extends State<PopularPromotionsWidget> {
                         image: promotion.image,
                         subtitle: promotion.subtitle,
                         description: promotion.description,
+                        quantity: promotion.quantity,
+                        userProfileId: promotion.userProfileId,
                       );
                     },
                   );
@@ -65,6 +67,9 @@ class PopularPromotionTiles extends StatelessWidget {
   final String image;
   final String subtitle;
   final String description;
+  final int quantity;
+  final int userProfileId;
+
 
   const PopularPromotionTiles({
     Key? key,
@@ -73,6 +78,9 @@ class PopularPromotionTiles extends StatelessWidget {
     required this.image,
     required this.subtitle,
     required this.description,
+    required this.quantity,
+    required this.userProfileId,
+
   }) : super(key: key);
 
   @override
@@ -97,6 +105,7 @@ class PopularPromotionTiles extends StatelessWidget {
                 subtitle: subtitle,
                 description: description,
                 cantidad: 0,
+                userProfileId: userProfileId,
               ),
             ),
           );

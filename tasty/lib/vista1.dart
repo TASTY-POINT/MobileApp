@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tasty/widgets/PopularFoodsWidget.dart';
 import 'package:tasty/widgets/SearchWidget.dart';
 import 'package:tasty/widgets/BestFoodWidget.dart';
+import 'package:tasty/cartPage.dart';
+import 'package:tasty/login.dart';
 class HomePage extends StatefulWidget {
   @override
   _vista1State createState() => _vista1State();
@@ -63,12 +65,12 @@ class _vista1State extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                // Acciones al seleccionar "Carrito"
+                Navigator.push(context,MaterialPageRoute(builder: (context) => CartPage()),);
               },
             ),
             ListTile(
               leading: Icon(
-                Icons.add,
+                Icons.person,
                 color: Colors.black,
               ),
               title: Text(
@@ -79,7 +81,24 @@ class _vista1State extends State<HomePage> {
                 ),
               ),
               onTap: () {
-                // Acciones al seleccionar "Perfil"
+
+              },
+            ),
+
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Exit',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) => login()),);
               },
             ),
           ],

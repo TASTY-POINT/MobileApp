@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/signin.dart';
+import 'package:tasty/restaurantHomePage.dart';
 import 'package:tasty/sucessful.dart';
 import 'package:tasty/vista1.dart';
+import 'package:http/http.dart' as http;
+import 'package:tasty/api/UserProfile.dart';
+import 'package:tasty/api/listUsers.dart';
+import 'package:tasty/api/Service.dart';
+import 'dart:convert';
+
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
@@ -11,6 +18,10 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +32,8 @@ class _loginState extends State<login> {
         title: Text(
           "Choose your food for today :D",
           style: TextStyle(
-              color: Color(0xFF3a3737),
-              fontSize: 16,
+            color: Color(0xFF3a3737),
+            fontSize: 16,
           ),
         ),
 
@@ -108,44 +119,22 @@ class _loginState extends State<login> {
             ),
 
 
+
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20, bottom: 15),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
-                  Text("Email",style:TextStyle (
-                    fontWeight: FontWeight.bold,
-                    color:  Color(0xff3f1602),
-                    fontSize: 20,
-                  ),),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "ingrese usuario",
-                          ),
-                        ),
-                      ),
+                  Text(
+                    "Email",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff3f1602),
+                      fontSize: 20,
                     ),
                   ),
-
-                  Text("Password",style:TextStyle (
-                    fontWeight: FontWeight.bold,
-                    color:  Color(0xff3f1602),
-                    fontSize: 20,
-                  ),),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -153,25 +142,54 @@ class _loginState extends State<login> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: TextField(
-                          obscureText: true,
+                          controller: emailController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Ingrese password",
+                            hintText: "Ingrese usuario",
                           ),
                         ),
                       ),
                     ),
                   ),
-
-                  Text("Forgot your password?",style:TextStyle (
-                    color:  Color(0xff414141),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),),
-
+                  Text(
+                    "Password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff3f1602),
+                      fontSize: 20,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: TextField(
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Ingrese contraseña",
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "Forgot your password?",
+                    style: TextStyle(
+                      color: Color(0xff414141),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
                 ],
               ),
             ),
+
+
 
             Row(
               children: [
@@ -194,13 +212,17 @@ class _loginState extends State<login> {
                             color: Color(0xFFFDFBEF),
                             fontWeight: FontWeight.bold,
                             fontSize: 23,
-                           // package: 'flutter_credit_card',
+                            // package: 'flutter_credit_card',
                           ),
                         ),
                       ),
                       onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),);
-                      },
+                        // Obtener los valores ingresados por el usuario en los campos de correo electrónico y contraseña
+                        String phoneNumber = emailController.text;
+                        String type = passwordController.text;
+
+                        // Llamar al método para verificar las credenciales del usuario
+                        loginUser(phoneNumber, type);                      },
 
                     ),
                   ),
@@ -225,4 +247,59 @@ class _loginState extends State<login> {
       //bottom bar
     );
   }
+
+
+  Future<void> loginUser(String phoneNumber, String type) async {
+    try {
+      final userProfile = await service.getUserProfileByCredentials(phoneNumber, type);
+
+      if (userProfile != null) {
+        // Credenciales válidas, redirige al usuario a la pantalla de éxito
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RestaurantPage(userId: userProfile.id)),
+        );
+      } else {
+        // Credenciales inválidas, muestra un mensaje de error
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error de autenticación'),
+            content: Text('Las credenciales ingresadas no son válidas.'),
+            actions: [
+              TextButton(
+                child: Text('Aceptar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (error) {
+      // Ocurrió un error al obtener el perfil de usuario, muestra un mensaje de error
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error de conexión'),
+          content: Text('No se pudo obtener el perfil de usuario.'),
+          actions: [
+            TextButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+
+
+
+
 }
+

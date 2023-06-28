@@ -11,6 +11,7 @@ class PromotionDetailsPage extends StatelessWidget {
   final String subtitle;
   final String description;
   final int cantidad;
+  final int userProfileId;
 
 
   const PromotionDetailsPage({
@@ -21,6 +22,7 @@ class PromotionDetailsPage extends StatelessWidget {
     required this.description,
     required this.id,
     required this.cantidad,
+    required this.userProfileId,
   }) : super(key: key);
 
   @override
