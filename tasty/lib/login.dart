@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/signin.dart';
 import 'package:tasty/restaurantHomePage.dart';
-import 'package:tasty/sucessful.dart';
-import 'package:tasty/vista1.dart';
+import 'package:tasty/TypeView.dart';
 import 'package:http/http.dart' as http;
 import 'package:tasty/api/UserProfile.dart';
 import 'package:tasty/api/listUsers.dart';
@@ -257,7 +256,7 @@ class _loginState extends State<login> {
         // Credenciales válidas, redirige al usuario a la pantalla de éxito
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RestaurantPage(userId: userProfile.id)),
+          MaterialPageRoute(builder: (context) => HomeView(userId: userProfile.id)),
         );
       } else {
         // Credenciales inválidas, muestra un mensaje de error
