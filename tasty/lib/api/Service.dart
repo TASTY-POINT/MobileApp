@@ -91,6 +91,16 @@ class service{
     }
   }
 
+  static Future<void> deletePromotion(int promotionId) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/promotion/$promotionId');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+      print('Promotion deleted successfully');
+    } else {
+      throw Exception('Failed to delete promotion');
+    }
+  }
 
 
 }

@@ -42,179 +42,195 @@ class _RestaurantPageState extends State<RestaurantPage> {
     );
   }
 
+  void _deletePromotion(Promotion promotion) async {
+    try {
+      await service.deletePromotion(promotion.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Promotion deleted.'),
+        ),
+      );
+      setState(() {
+        _promotionsFuture = service.getUserPromotions(widget.userId);
+      });
+    } catch (e) {
+      print('Error deleting promotion: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to delete promotion.'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFEFBC3D),
+      appBar: AppBar(
         backgroundColor: Color(0xFFEFBC3D),
-        appBar: AppBar(
-          backgroundColor: Color(0xFFEFBC3D),
-          elevation: 0,
-          title: Text(
-            "Your Products",
-            style: TextStyle(
-              color: Color(0xFF3a3737),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+        elevation: 0,
+        title: Text(
+          "Your Products",
+          style: TextStyle(
+            color: Color(0xFF3a3737),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Color(0xFF3F1602),
-              ),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
-            ),
-          ],
         ),
-        body: Container(
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Color(0xFF3F1602),
+            ),
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+          ),
+        ],
+      ),
+      body: Container(
         padding: EdgeInsets.all(16),
-    child: Column(
-
-    children: [
-
-    Expanded(
-    child: FutureBuilder<List<Promotion>>(
-      future: service.getUserPromotions(widget.userId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasData) {
-          final promotions = snapshot.data!;
-          return ListView.builder(
-            itemCount: promotions.length,
-            itemBuilder: (context, index) {
-              final promotion = promotions[index];
-              return Container(
-                color: Color(0xFFFDFBEF),
-                padding: EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Image.network(
-                      promotion.image,
-                      width: 80,
-                      height: 80,
-                    ),
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder<List<Promotion>>(
+                future: _promotionsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasData) {
+                    final promotions = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: promotions.length,
+                      itemBuilder: (context, index) {
+                        final promotion = promotions[index];
+                        return Container(
+                          color: Color(0xFFFDFBEF),
+                          padding: EdgeInsets.all(16),
+                          child: Row(
                             children: [
-                              Text(
-                                promotion.title,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              Image.network(
+                                promotion.image,
+                                width: 80,
+                                height: 80,
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          promotion.title,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            // Acción al presionar el botón de editar
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.add),
+                                          onPressed: () {
+                                            // Acción al presionar el botón de agregar
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            _deletePromotion(promotion);
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Spacer(),
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {
-                                  // Acción al presionar el botón de editar
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.add),
-                                onPressed: () {
-                                  // Acción al presionar el botón de agregar
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  // Acción al presionar el botón de eliminar
-                                },
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        } else {
-          return Text('No promotions available.');
-        }
-      },
-    ),
-
-    ),
-      Text(
-        "Reviews",
-        style: TextStyle(
-          fontSize: 20,
-          color: Color(0xff3f1602),
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      SizedBox(width: 16),
-          SizedBox(height: 16),
-          Expanded(
-            child: FutureBuilder<List<Review>>(
-              future: _getReviewsByFoodStoreId(widget.userId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasData) {
-                  final reviews = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: reviews.length,
-                    itemBuilder: (context, index) {
-                      final review = reviews[index];
-                      return Container(
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              review.text,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Rating: ${review.rate}',
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 16),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                } else {
-                  return Text('No reviews available.');
-                }
-              },
+                        );
+                      },
+                    );
+                  } else {
+                    return Text('No promotions available.');
+                  }
+                },
+              ),
             ),
-          ),
-
+            Text(
+              "Reviews",
+              style: TextStyle(
+                fontSize: 20,
+                color: Color(0xff3f1602),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: FutureBuilder<List<Review>>(
+                future: _getReviewsByFoodStoreId(widget.userId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasData) {
+                    final reviews = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: reviews.length,
+                      itemBuilder: (context, index) {
+                        final review = reviews[index];
+                        return Container(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                review.text,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Icon(Icons.star, color: Colors.yellow),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    'Rating: ${review.rate}',
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Text('No reviews available.');
+                  }
+                },
+              ),
+            ),
           ],
         ),
-    ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToCreatePromotion,
         child: Icon(Icons.add),
         backgroundColor: Color(0xFFFDFBEF),
       ),
-
     );
   }
 }
+
 
