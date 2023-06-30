@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tasty/api/Service.dart';
 import 'package:tasty/api/Promotion.dart';
 import 'package:tasty/api/Review.dart';
-import 'CreatePromotionPage.dart';
+import 'package:tasty/CreatePromotionPage.dart';
+import 'package:tasty/EditPromotionPage.dart';
 
 class RestaurantPage extends StatefulWidget {
   final int userId;
@@ -24,6 +25,13 @@ class _RestaurantPageState extends State<RestaurantPage> {
     _reviewsFuture = service.getReviews();
   }
 
+  void _incrementPromotionQuantity(Promotion promotion) {
+    setState(() {
+      promotion.quantity++; // Incrementa la cantidad de la promoción en 1
+    });
+  }
+
+
   Future<List<Review>> _getReviewsByFoodStoreId(int foodstoreId) async {
     final reviews = await _reviewsFuture;
     if (reviews != null) {
@@ -40,6 +48,17 @@ class _RestaurantPageState extends State<RestaurantPage> {
         builder: (context) => CreatePromotionPage(userId: widget.userId),
       ),
     );
+  }
+  void _navigateToEditPromotionAndRefresh(Promotion promotion) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditPromotionPage(promotion: promotion),
+      ),
+    );
+    setState(() {
+      _promotionsFuture = service.getUserPromotions(widget.userId);
+    });
   }
 
   void _deletePromotion(Promotion promotion) async {
@@ -116,7 +135,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                 width: 80,
                                 height: 80,
                               ),
-                              SizedBox(width: 16),
+                              SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,13 +153,18 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                         IconButton(
                                           icon: Icon(Icons.edit),
                                           onPressed: () {
-                                            // Acción al presionar el botón de editar
+                                            _navigateToEditPromotionAndRefresh(promotion);
                                           },
                                         ),
                                         IconButton(
                                           icon: Icon(Icons.add),
                                           onPressed: () {
-                                            // Acción al presionar el botón de agregar
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                content: Text('Cantidad aumentada'),
+                                              ),
+                                            );
+                                            _incrementPromotionQuantity(promotion);
                                           },
                                         ),
                                         IconButton(
@@ -165,6 +189,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 },
               ),
             ),
+
             Text(
               "Reviews",
               style: TextStyle(

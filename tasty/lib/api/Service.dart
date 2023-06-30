@@ -102,5 +102,19 @@ class service{
     }
   }
 
+  static Future<void> editPromotion(Promotion promotion) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/promotion/${promotion.id}');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode(promotion.toJson());
+
+    final response = await http.put(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      print('Promotion edited successfully');
+    } else {
+      throw Exception('Failed to edit promotion');
+    }
+  }
+
 
 }
