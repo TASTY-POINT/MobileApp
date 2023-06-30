@@ -116,5 +116,17 @@ class service{
     }
   }
 
+  static Future<List<Promotion>> getFoodStorePromotions(int foodStoreId) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/userprofile/$foodStoreId/promotions');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List;
+      final promotions = data.map((item) => Promotion.fromJson(item)).toList();
+      return promotions;
+    } else {
+      throw Exception('Failed to load promotions');
+    }
+  }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasty/api/Service.dart';
 import 'package:tasty/api/FoodStore.dart';
+import 'package:tasty/widgets/FoodstorePromotionWidget.dart';
 
 class BestFoodStoreWidget extends StatefulWidget {
   @override
@@ -15,6 +16,9 @@ class _BestFoodStoreWidgetState extends State<BestFoodStoreWidget> {
     super.initState();
     _foodStoresFuture = service.getFoodStores();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +63,30 @@ class BestFoodStoreTiles extends StatelessWidget {
   final String name;
   final String imageUrl;
   final String rating;
+  final int foodStoreId;
 
   const BestFoodStoreTiles({
     Key? key,
     required this.name,
     required this.imageUrl,
     required this.rating,
+    required this.foodStoreId,
   }) : super(key: key);
+
+  void _showPromotions(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FoodStorePromotionsWidget(foodStoreId: foodStoreId),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _showPromotions(context), // Llama al método _showPromotions pasando el contexto
       child: Column(
         children: <Widget>[
           Container(
@@ -98,6 +114,7 @@ class BestFoodStoreTiles extends StatelessWidget {
 }
 
 
+
 class BestFoodStoreList extends StatelessWidget {
   final Future<List<FoodStore>>? foodStoresFuture;
 
@@ -121,6 +138,7 @@ class BestFoodStoreList extends StatelessWidget {
                 name: foodStore.name,
                 imageUrl: foodStore.image,
                 rating: foodStore.rate.toString(),
+                foodStoreId: foodStore.id, // Pasa el ID del foodstore aquí
               );
             },
           );
@@ -131,5 +149,6 @@ class BestFoodStoreList extends StatelessWidget {
     );
   }
 }
+
 
 
