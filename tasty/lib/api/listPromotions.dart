@@ -6,7 +6,7 @@ class listadoP {
 
     if (listaJson != null) {
       for (var u in listaJson) {
-        final usu = Promotion.objJson(u);
+        final usu = Promotion.fromJson(u);
         listadoPromotion.add(usu);
       }
     }

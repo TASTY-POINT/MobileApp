@@ -75,7 +75,21 @@ class service{
     }
   }
 
+  static Future<Promotion> createPromotion(Promotion promotion) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/promotion');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode(promotion.toJson());
 
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      final responseJson = json.decode(response.body);
+      final createdPromotion = Promotion.fromJson(responseJson);
+      return createdPromotion;
+    } else {
+      throw Exception('Failed to create promotion');
+    }
+  }
 
 
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasty/api/Service.dart';
 import 'package:tasty/api/Promotion.dart';
 import 'package:tasty/api/Review.dart';
+import 'CreatePromotionPage.dart';
 
 class RestaurantPage extends StatefulWidget {
   final int userId;
@@ -30,6 +31,15 @@ class _RestaurantPageState extends State<RestaurantPage> {
       return filteredReviews;
     }
     return [];
+  }
+
+  void _navigateToCreatePromotion() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreatePromotionPage(userId: widget.userId),
+      ),
+    );
   }
 
   @override
@@ -67,76 +77,76 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
     Expanded(
     child: FutureBuilder<List<Promotion>>(
-    future: _promotionsFuture,
-    builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return Center(child: CircularProgressIndicator());
-    } else if (snapshot.hasData) {
-    final promotions = snapshot.data!;
-    return ListView.builder(
-    itemCount: promotions.length,
-    itemBuilder: (context, index) {
-    final promotion = promotions[index];
-    return Container(
-    color: Color(0xFFFDFBEF),
-    padding: EdgeInsets.all(16),
-    child: Row(
-    children: [
-    Image.network(
-    promotion.image,
-    width: 80,
-    height: 80,
+      future: service.getUserPromotions(widget.userId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasData) {
+          final promotions = snapshot.data!;
+          return ListView.builder(
+            itemCount: promotions.length,
+            itemBuilder: (context, index) {
+              final promotion = promotions[index];
+              return Container(
+                color: Color(0xFFFDFBEF),
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Image.network(
+                      promotion.image,
+                      width: 80,
+                      height: 80,
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                promotion.title,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Spacer(),
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  // Acción al presionar el botón de editar
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  // Acción al presionar el botón de agregar
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  // Acción al presionar el botón de eliminar
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        } else {
+          return Text('No promotions available.');
+        }
+      },
     ),
-    SizedBox(width: 16),
 
-    Expanded(
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Row(
-    children: [
-    Text(
-    promotion.title,
-    style: TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
     ),
-    ),
-    Spacer(),
-    IconButton(
-    icon: Icon(Icons.edit),
-    onPressed: () {
-    // Acción al presionar el botón de editar
-    },
-    ),
-    IconButton(
-    icon: Icon(Icons.add),
-    onPressed: () {
-    // Acción al presionar el botón de aumentar
-    },
-    ),
-    IconButton(
-    icon: Icon(Icons.delete),
-    onPressed: () {
-    // Acción al presionar el botón de eliminar
-    },
-    ),
-    ],
-    ),
-    ],
-    ),
-    ),
-    ],
-    ),
-    );
-    },
-    );
-    } else {
-      return Text('No promotions available.');
-    }
-    },
-    ),
-        ),
       Text(
         "Reviews",
         style: TextStyle(
@@ -198,6 +208,12 @@ class _RestaurantPageState extends State<RestaurantPage> {
           ],
         ),
     ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToCreatePromotion,
+        child: Icon(Icons.add),
+        backgroundColor: Color(0xFFFDFBEF),
+      ),
+
     );
   }
 }
