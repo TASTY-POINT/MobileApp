@@ -6,6 +6,8 @@ import 'package:tasty/api/Promotion.dart';
 import 'package:tasty/api/Review.dart';
 import 'package:tasty/configuracion.dart';
 
+import 'login.dart';
+
 class RestaurantPage extends StatefulWidget {
   final int userId;
 
@@ -156,8 +158,39 @@ class _RestaurantPageState extends State<RestaurantPage> {
                             ),
                           )), )
 
+
                   ],
-                )
+                ),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            backgroundColor: Color(0xFFEFBC3D),
+
+                          ),
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => login()),);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Salir',
+                              style: TextStyle(
+                                color: Color(0xff3f1602),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                // package: 'flutter_credit_card',
+                              ),
+                            ),
+                          )), )
+
+                  ],
+                ),
 
 
 
