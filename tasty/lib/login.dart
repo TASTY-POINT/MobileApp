@@ -95,7 +95,7 @@ class _loginState extends State<login> {
                           child: Container(
                             margin: EdgeInsets.all(8.0),
                             child: Text(
-                              'Signin',
+                              'Sign up',
                               style: TextStyle(
                                 color: Color(0xFFFDFBEF),
                                 fontWeight: FontWeight.bold,

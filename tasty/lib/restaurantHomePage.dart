@@ -47,14 +47,20 @@ class _RestaurantPageState extends State<RestaurantPage> {
     return [];
   }
 
-  void _navigateToCreatePromotion() {
-    Navigator.push(
+  void _navigateToCreatePromotion() async {
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => CreatePromotionPage(userId: widget.userId),
       ),
     );
+
+    // Actualiza la lista de promociones
+    setState(() {
+      _promotionsFuture = service.getUserPromotions(widget.userId);
+    });
   }
+
   void _navigateToEditPromotionAndRefresh(Promotion promotion) async {
     await Navigator.push(
       context,

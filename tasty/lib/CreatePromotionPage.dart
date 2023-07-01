@@ -189,7 +189,9 @@ class _CreatePromotionPageState extends State<CreatePromotionPage> {
 
                       SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: _createPromotion,
+                        onPressed: () {
+                          _createPromotion();
+                        },
                         child: Text('Create Promotion'),
                         style: ElevatedButton.styleFrom(
                           primary: Color(0xFFFDFBEF),
