@@ -206,7 +206,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
 
                           ),
                           onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => contacto()),);
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => Contacto()),);
                           },
                           child: Container(
                             margin: EdgeInsets.all(8.0),
