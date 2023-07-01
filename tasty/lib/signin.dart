@@ -16,7 +16,7 @@ class _signinState extends State<signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Color(0xFFEFBC3D),
+      backgroundColor: Color(0xFFEFBC3D),
       appBar: AppBar(
         backgroundColor: Color(0xFFEFBC3D),
         elevation: 0,
@@ -27,15 +27,12 @@ class _signinState extends State<signin> {
             fontSize: 16,
           ),
         ),
-
-
-
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(
@@ -45,15 +42,13 @@ class _signinState extends State<signin> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10,right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              backgroundColor: Color(0xff414141)
-
-                          ),
+                              backgroundColor: Color(0xff414141)),
                           child: Container(
                             margin: EdgeInsets.all(8.0),
                             child: Text(
@@ -66,24 +61,24 @@ class _signinState extends State<signin> {
                               ),
                             ),
                           ),
-                          onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => login()),);
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => login()),
+                            );
                           },
-
                         ),
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10,right: 10),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              backgroundColor: Color(0xff3f1602)
-
-                          ),
+                              backgroundColor: Color(0xff3f1602)),
                           child: Container(
                             margin: EdgeInsets.all(8.0),
                             child: Text(
@@ -96,34 +91,35 @@ class _signinState extends State<signin> {
                               ),
                             ),
                           ),
-                          onPressed: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => signin()),);
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => signin()),
+                            );
                           },
-
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),
             ),
-
-
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-
-                  Text("Email",style:TextStyle (
-                    fontWeight: FontWeight.bold,
-                    color:  Color(0xff3f1602),
-                    fontSize: 20,
-                  ),),
+                  Text(
+                    "Email",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff3f1602),
+                      fontSize: 20,
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -141,13 +137,16 @@ class _signinState extends State<signin> {
                     ),
                   ),
 
-                  Text("Password",style:TextStyle (
-                    fontWeight: FontWeight.bold,
-                    color:  Color(0xff3f1602),
-                    fontSize: 20,
-                  ),),
+                  Text(
+                    "Password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff3f1602),
+                      fontSize: 20,
+                    ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 0),
+                    padding: const EdgeInsets.only(top: 10, bottom: 0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -178,31 +177,26 @@ class _signinState extends State<signin> {
 
                       Text(
                         'I accept all the Terms and Conditions ',
-                        style: TextStyle(fontSize: 15.0, color: Color(0xff414141)),
+                        style:
+                            TextStyle(fontSize: 15.0, color: Color(0xff414141)),
                       ), //Text
                       //Checkbox
                     ], //<Widget>[]
                   ), //Row
-
                 ],
               ),
             ),
-
-
-
             Row(
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 20, top: 0),
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          backgroundColor: Color(0xff3f1602)
-
-                      ),
+                          backgroundColor: Color(0xff3f1602)),
                       child: Container(
                         margin: EdgeInsets.all(8.0),
                         child: Text(
@@ -215,10 +209,12 @@ class _signinState extends State<signin> {
                           ),
                         ),
                       ),
-                      onPressed: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage()),);
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
                       },
-
                     ),
                   ),
                 ),
@@ -226,21 +222,12 @@ class _signinState extends State<signin> {
             ),
             Container(
               height: 250,
-              child: Image(
-                  image: AssetImage("assets/img/logo.png")
-              ),
+              child: Image(image: AssetImage("assets/img/logo.png")),
             )
-
-
-
-
-
-
           ],
         ),
       ),
       //bottom bar
-
     );
   }
 }
