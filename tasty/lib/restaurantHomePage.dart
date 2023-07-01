@@ -4,6 +4,12 @@ import 'package:tasty/api/Promotion.dart';
 import 'package:tasty/api/Review.dart';
 import 'package:tasty/CreatePromotionPage.dart';
 import 'package:tasty/EditPromotionPage.dart';
+import 'package:tasty/Profile.dart';
+import 'package:tasty/Contact.dart';
+import 'package:tasty/login.dart';
+import 'package:tasty/Configuration.dart';
+
+
 
 class RestaurantPage extends StatefulWidget {
   final int userId;
@@ -97,6 +103,135 @@ class _RestaurantPageState extends State<RestaurantPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
+      ),
+      drawer: Drawer(
+        child: Container(
+          color: Color(0xff3f1602),
+          child: Padding(
+            padding: const EdgeInsets.only(top:40.0, left: 10, right: 10, bottom: 30),
+            child: Column(
+              children: [
+
+                Text("TEN UN MONITO DIA :)", style: TextStyle(
+                  color: Color(0xFFEFBC3D),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),),
+
+                SizedBox(
+                  height: 20,
+                ),
+
+                Container(
+                  height: 285,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(380),
+                      image: DecorationImage(
+                        image: AssetImage("assets/img/logo.png"),
+                      )
+                  ),
+                ),
+
+                SizedBox(
+                  height: 20,
+                ),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            backgroundColor: Color(0xFFEFBC3D),
+
+                          ),
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => profile(userId: widget.userId),));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Profile',
+                              style: TextStyle(
+                                color: Color(0xff3f1602),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                // package: 'flutter_credit_card',
+                              ),
+                            ),
+                          )), )
+
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            backgroundColor: Color(0xFFEFBC3D),
+
+                          ),
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => login()),);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Exit',
+                              style: TextStyle(
+                                color: Color(0xff3f1602),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                // package: 'flutter_credit_card',
+                              ),
+                            ),
+                          )), )
+
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            backgroundColor: Color(0xFFEFBC3D),
+
+                          ),
+                          onPressed: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => contacto()),);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Contacto',
+                              style: TextStyle(
+                                color: Color(0xff3f1602),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                // package: 'flutter_credit_card',
+                              ),
+                            ),
+                          )), )
+
+                  ],
+                )
+
+
+
+
+              ],
+            ),
+          ),
+        ),
+
       ),
       body: Container(
         padding: EdgeInsets.all(16),

@@ -151,4 +151,34 @@ class service{
     return promotion.quantity;
   }
 
+  static Future<UserProfile?> getUserProfileById(int id) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/userprofile/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      final userProfile = UserProfile.fromJson(responseJson);
+      return userProfile;
+    } else {
+      throw Exception('Failed to get user profile');
+    }
+  }
+
+  static Future<UserProfile> createUserProfile(UserProfile userProfile) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/userprofile');
+    final headers = {'Content-Type': 'application/json'};
+    final body = json.encode(userProfile.toJson());
+
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 201) {
+      final responseJson = json.decode(response.body);
+      final createdUserProfile = UserProfile.fromJson(responseJson);
+      return createdUserProfile;
+    } else {
+      throw Exception('Failed to create user profile');
+    }
+  }
+
+
 }
