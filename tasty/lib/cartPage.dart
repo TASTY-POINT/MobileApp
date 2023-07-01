@@ -41,15 +41,6 @@ class _CartPageState extends State<CartPage> {
             color: Color(0xFF3F1602),
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Color(0xFF3F1602),
-            ),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: FutureBuilder<List<Product>>(
         future: lista,

@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tasty/model/Product.dart';
-import 'package:tasty/cartPage.dart';
-import 'package:tasty/vista1.dart';
-import 'package:rounded_background_text/rounded_background_text.dart';
-import 'package:tasty/database/db.dart';
 class FoodStoreDetailsPage extends StatelessWidget {
   final String name;
   final String imageUrl;

@@ -4,6 +4,8 @@ import 'package:tasty/cartPage.dart';
 import 'package:tasty/vista1.dart';
 import 'package:rounded_background_text/rounded_background_text.dart';
 import 'package:tasty/database/db.dart';
+import 'package:tasty/api/Service.dart';
+import 'package:tasty/login.dart';
 class PromotionDetailsPage extends StatelessWidget {
   final int id;
   final String title;
@@ -38,9 +40,76 @@ class PromotionDetailsPage extends StatelessWidget {
                 Icons.menu,
                 color: Color(0xff3f1602),
               ),
-              onPressed:(){})
+              onPressed:(){Scaffold.of(context).openEndDrawer();})
         ],
 
+      ),
+      endDrawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFFFDFBEF),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xFFEFBC3D),
+              ),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.shopping_cart ,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Carrito',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) => CartPage()),);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Perfil',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+
+              },
+            ),
+
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.black,
+              ),
+              title: Text(
+                'Exit',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) => login()),);
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -70,19 +139,43 @@ class PromotionDetailsPage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      '\$' + subtitle,
+                      'Precio: '+subtitle,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Container(
                     padding: EdgeInsets.all(10),
+                    child: FutureBuilder<int>(
+                      future: service.getPromotionQuantity(id),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          final quantity = snapshot.data!;
+                          return Text(
+                            'Cantidad restante: $quantity',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error al obtener la cantidad');
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                  ),
+
+
+                  Container(
+                    padding: EdgeInsets.all(10),
                     child: Text(
                       description,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -19,7 +19,6 @@ class _EditPromotionPageState extends State<EditPromotionPage> {
   late TextEditingController _imageController;
   late TextEditingController _quantityController;
 
-
   @override
   void initState() {
     super.initState();
@@ -107,95 +106,92 @@ class _EditPromotionPageState extends State<EditPromotionPage> {
         backgroundColor: Color(0xFFEFBC3D),
         elevation: 0,
         title: Text(
-          "Your Products",
+          "Edit Promotion",
           style: TextStyle(
             color: Color(0xFF3a3737),
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Color(0xFF3F1602),
-            ),
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(labelText: 'Title'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a title';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _subtitleController,
-                decoration: InputDecoration(labelText: 'Price'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a price';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _descriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a description';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _imageController,
-                decoration: InputDecoration(labelText: 'ImageUrl'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an image URL';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _quantityController,
-                decoration: InputDecoration(labelText: 'Quantity'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the quantity';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _editPromotion,
-                child: Text('Edit Promotion'),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFFDFBEF),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _titleController,
+                        decoration: InputDecoration(labelText: 'Title'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a title';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _subtitleController,
+                        decoration: InputDecoration(labelText: 'Price'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a price';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _descriptionController,
+                        decoration: InputDecoration(labelText: 'Description'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a description';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _imageController,
+                        decoration: InputDecoration(labelText: 'ImageUrl'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter an image URL';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: _quantityController,
+                        decoration: InputDecoration(labelText: 'Quantity'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the quantity';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: _editPromotion,
+                        child: Text('Edit Promotion'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFFFDFBEF),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

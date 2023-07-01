@@ -146,4 +146,9 @@ class service{
     await editPromotion(promotion);
   }
 
+  static Future<int> getPromotionQuantity(int promotionId) async {
+    final promotion = await getPromotion(promotionId);
+    return promotion.quantity;
+  }
+
 }

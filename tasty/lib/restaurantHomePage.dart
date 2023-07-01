@@ -97,17 +97,6 @@ class _RestaurantPageState extends State<RestaurantPage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Color(0xFF3F1602),
-            ),
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-          ),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16),
@@ -145,7 +134,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                                         Text(
                                           promotion.title,
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 12.5,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
