@@ -128,5 +128,22 @@ class service{
       throw Exception('Failed to load promotions');
     }
   }
+  static Future<Promotion> getPromotion(int id) async {
+    final url = Uri.parse('https://tastypointapi.azurewebsites.net/api/v1/promotion/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      final promotion = Promotion.fromJson(responseJson);
+      return promotion;
+    } else {
+      throw Exception('Failed to get promotion');
+    }
+  }
+  static Future<void> reducePromotionQuantity(int promotionId, int quantityToReduce) async {
+    final promotion = await getPromotion(promotionId);
+    promotion.quantity -= quantityToReduce;
+    await editPromotion(promotion);
+  }
 
 }

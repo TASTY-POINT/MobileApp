@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasty/model/Product.dart';
 import 'package:tasty/database/db.dart';
 import 'package:tasty/payment.dart';
+import 'package:tasty/api/Service.dart';
 
 
 class CartPage extends StatefulWidget {
@@ -176,12 +177,26 @@ class _CartPageState extends State<CartPage> {
             ),
             backgroundColor: Color(0xFF3F1602),
           ),
-          onPressed: () {
+          onPressed: () async {
+            final List<Product> items = await lista; // Obtener la lista de productos del FutureBuilder
+
+            for (var item in items) { // Iterar sobre cada item en la lista
+              final productFromAPI = await service.getPromotion(item.id); // Obtener el producto correspondiente del API
+              if (item.cantidad >= productFromAPI.quantity) { // Comparar las cantidades
+                // La cantidad del item en la lista es mayor que la cantidad del producto en el API
+                await service.deletePromotion(item.id);
+
+              }
+              else{await service.reducePromotionQuantity(item.id, item.cantidad);}
+            }
+            await DB().deleteAllProducts();
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => CreditCardPage()),
             );
           },
+
+
           child: Text(
             'Realizar Pedido',
             style: TextStyle(

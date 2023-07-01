@@ -72,5 +72,13 @@ class DB{
     await db.delete('products',where: 'id=?',whereArgs: [id]);
   }
 
+  Future<void> updateProductQuantity(int id, int quantity) async {
+    final db = await initializaDB();
+    await db.update('products', {'quantity': quantity}, where: 'id = ?', whereArgs: [id]);
+  }
 
+  Future<void> deleteAllProducts() async {
+    final db = await initializaDB();
+    await db.delete('products');
+  }
 }
